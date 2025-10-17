@@ -1,8 +1,9 @@
 # LCLS_FEL_Surrogate
-Self-contained ML-based surrogate model of the LCLS FEL pulse intensity packaged using LUME-model [text](https://slaclab.github.io/lume-model/).
+Self-contained ML-based surrogate model of the LCLS FEL pulse intensity packaged using [LUME-model](https://slaclab.github.io/lume-model/).
 
 ## Dependencies
 ```
+torch
 lume-model
 ```
 
