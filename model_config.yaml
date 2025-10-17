@@ -1,0 +1,815 @@
+device: cpu
+input_transformers:
+- resources/lcls_fel_input_scaler.pt
+input_variables:
+  ACCL:LI25:1:ADES:
+    default_value: 6259.991277268401
+    is_constant: false
+    value_range:
+    - 3485.9381114624007
+    - 11064.599700076029
+    value_range_tolerance: 1.0e-08
+    variable_class: ScalarVariable
+  HXR electron energy [GeV]:
+    default_value: 10.620023709039188
+    is_constant: false
+    value_range:
+    - 8.000000023691465
+    - 14.400050086644773
+    value_range_tolerance: 1.0e-08
+    variable_class: ScalarVariable
+  HXR photon energy [eV]:
+    default_value: 9767.27278884943
+    is_constant: false
+    value_range:
+    - 7000.003878649642
+    - 29490.9024639905
+    value_range_tolerance: 1.0e-08
+    variable_class: ScalarVariable
+  QUAD:BSYH:445:BCTRL:
+    default_value: 39.05905363047289
+    is_constant: false
+    value_range:
+    - 29.42301591749454
+    - 52.9614287
+    value_range_tolerance: 1.0e-08
+    variable_class: ScalarVariable
+  QUAD:BSYH:465:BCTRL:
+    default_value: -35.82279670742925
+    is_constant: false
+    value_range:
+    - -48.5732837
+    - -26.985157546587594
+    value_range_tolerance: 1.0e-08
+    variable_class: ScalarVariable
+  QUAD:BSYH:640:BCTRL:
+    default_value: 26.944616014161962
+    is_constant: false
+    value_range:
+    - 15.407429651938823
+    - 36.6870717
+    value_range_tolerance: 1.0e-08
+    variable_class: ScalarVariable
+  QUAD:BSYH:735:BCTRL:
+    default_value: -18.5434079
+    is_constant: false
+    value_range:
+    - -25.143604035733052
+    - -13.968669068725575
+    value_range_tolerance: 1.0e-08
+    variable_class: ScalarVariable
+  QUAD:BSYH:910:BCTRL:
+    default_value: 17.65537467766854
+    is_constant: false
+    value_range:
+    - 13.432524640167761
+    - 24.178544235417764
+    value_range_tolerance: 1.0e-08
+    variable_class: ScalarVariable
+  QUAD:CLTH:140:BCTRL:
+    default_value: -21.5701116
+    is_constant: false
+    value_range:
+    - -29.247608900638806
+    - -16.248671453627423
+    value_range_tolerance: 1.0e-08
+    variable_class: ScalarVariable
+  QUAD:CLTH:170:BCTRL:
+    default_value: 11.7265427
+    is_constant: false
+    value_range:
+    - 8.833553627664836
+    - 15.900396816580473
+    value_range_tolerance: 1.0e-08
+    variable_class: ScalarVariable
+  QUAD:DMPH:300:BCTRL:
+    default_value: 31.637144402655668
+    is_constant: false
+    value_range:
+    - 24.5761434781125
+    - 39.7705984
+    value_range_tolerance: 1.0e-08
+    variable_class: ScalarVariable
+  QUAD:DMPH:380:BCTRL:
+    default_value: -25.045338843383075
+    is_constant: false
+    value_range:
+    - -29.733366
+    - -19.3156328810647
+    value_range_tolerance: 1.0e-08
+    variable_class: ScalarVariable
+  QUAD:DMPH:500:BCTRL:
+    default_value: -23.642835
+    is_constant: false
+    value_range:
+    - -32.058081349750275
+    - -13.3575338957293
+    value_range_tolerance: 1.0e-08
+    variable_class: ScalarVariable
+  QUAD:IN20:121:BCTRL:
+    default_value: 0.0037150474
+    is_constant: false
+    value_range:
+    - -0.015
+    - 0.015
+    value_range_tolerance: 1.0e-08
+    variable_class: ScalarVariable
+  QUAD:IN20:122:BCTRL:
+    default_value: -0.001972229
+    is_constant: false
+    value_range:
+    - -0.015
+    - 0.013877435475847189
+    value_range_tolerance: 1.0e-08
+    variable_class: ScalarVariable
+  QUAD:IN20:371:BCTRL:
+    default_value: 2.7224804
+    is_constant: false
+    value_range:
+    - 1.9521433
+    - 3.56
+    value_range_tolerance: 1.0e-08
+    variable_class: ScalarVariable
+  QUAD:LI21:201:BCTRL:
+    default_value: -6.886857568548915
+    is_constant: false
+    value_range:
+    - -11.84
+    - -1.3056424266035596
+    value_range_tolerance: 1.0e-08
+    variable_class: ScalarVariable
+  QUAD:LI21:221:BCTRL:
+    default_value: -0.0875696
+    is_constant: false
+    value_range:
+    - -0.6148016000000001
+    - 0.8130961532115308
+    value_range_tolerance: 1.0e-08
+    variable_class: ScalarVariable
+  QUAD:LI22:301:BCTRL:
+    default_value: -4.0414239
+    is_constant: false
+    value_range:
+    - -4.522697385661235
+    - -2.434345758894108
+    value_range_tolerance: 1.0e-08
+    variable_class: ScalarVariable
+  QUAD:LI22:401:BCTRL:
+    default_value: 4.3652688
+    is_constant: false
+    value_range:
+    - 2.6754390876969905
+    - 4.936070092703625
+    value_range_tolerance: 1.0e-08
+    variable_class: ScalarVariable
+  QUAD:LI22:501:BCTRL:
+    default_value: -4.879291431106834
+    is_constant: false
+    value_range:
+    - -5.762022444205207
+    - -3.1463969558967753
+    value_range_tolerance: 1.0e-08
+    variable_class: ScalarVariable
+  QUAD:LI22:601:BCTRL:
+    default_value: 5.5176445
+    is_constant: false
+    value_range:
+    - 1.065568199999996
+    - 6.909197774314891
+    value_range_tolerance: 1.0e-08
+    variable_class: ScalarVariable
+  QUAD:LI22:701:BCTRL:
+    default_value: -6.0169697
+    is_constant: false
+    value_range:
+    - -7.327688710424532
+    - -3.9155698337855727
+    value_range_tolerance: 1.0e-08
+    variable_class: ScalarVariable
+  QUAD:LI22:801:BCTRL:
+    default_value: 6.779017710935243
+    is_constant: false
+    value_range:
+    - 0.8373322000000147
+    - 8.837332182461433
+    value_range_tolerance: 1.0e-08
+    variable_class: ScalarVariable
+  QUAD:LI22:901:BCTRL:
+    default_value: -6.4291841950062185
+    is_constant: false
+    value_range:
+    - -8.388621802597509
+    - -3.3
+    value_range_tolerance: 1.0e-08
+    variable_class: ScalarVariable
+  QUAD:LI23:201:BCTRL:
+    default_value: 6.607008438862224
+    is_constant: false
+    value_range:
+    - 3.6991422035709367
+    - 8.922288923549385
+    value_range_tolerance: 1.0e-08
+    variable_class: ScalarVariable
+  QUAD:LI23:401:BCTRL:
+    default_value: 7.2083427586648
+    is_constant: false
+    value_range:
+    - 3.6271934987562626
+    - 8.413231970715424
+    value_range_tolerance: 1.0e-08
+    variable_class: ScalarVariable
+  QUAD:LI23:501:BCTRL:
+    default_value: -7.434103538098122
+    is_constant: false
+    value_range:
+    - -8.846310112475514
+    - -4.04771646559679
+    value_range_tolerance: 1.0e-08
+    variable_class: ScalarVariable
+  QUAD:LI23:801:BCTRL:
+    default_value: 9.57250066067111
+    is_constant: false
+    value_range:
+    - 5.585983242787077
+    - 11.194403094623414
+    value_range_tolerance: 1.0e-08
+    variable_class: ScalarVariable
+  QUAD:LI23:901:BCTRL:
+    default_value: -9.696874819304911
+    is_constant: false
+    value_range:
+    - -10.765814030877912
+    - -5.816322382596585
+    value_range_tolerance: 1.0e-08
+    variable_class: ScalarVariable
+  QUAD:LI24:201:BCTRL:
+    default_value: 10.9317865
+    is_constant: false
+    value_range:
+    - 6.811574221366683
+    - 11.965668076253683
+    value_range_tolerance: 1.0e-08
+    variable_class: ScalarVariable
+  QUAD:LI24:301:BCTRL:
+    default_value: -12.241952887506462
+    is_constant: false
+    value_range:
+    - -13.321884011763528
+    - -7.7020081468998915
+    value_range_tolerance: 1.0e-08
+    variable_class: ScalarVariable
+  QUAD:LI24:401:BCTRL:
+    default_value: 14.530549073540222
+    is_constant: false
+    value_range:
+    - 9.044789052748325
+    - 15.860112492655407
+    value_range_tolerance: 1.0e-08
+    variable_class: ScalarVariable
+  QUAD:LI24:740:BCTRL:
+    default_value: 0.09136809999999995
+    is_constant: false
+    value_range:
+    - -2.1
+    - 2.0
+    value_range_tolerance: 1.0e-08
+    variable_class: ScalarVariable
+  QUAD:LI28:301:BCTRL:
+    default_value: -12.372140734144278
+    is_constant: false
+    value_range:
+    - -15.210584917256849
+    - -8.32585217718227
+    value_range_tolerance: 1.0e-08
+    variable_class: ScalarVariable
+  QUAD:LI28:401:BCTRL:
+    default_value: 12.1671318
+    is_constant: false
+    value_range:
+    - 8.10647553594617
+    - 15.16214371628514
+    value_range_tolerance: 1.0e-08
+    variable_class: ScalarVariable
+  QUAD:LI28:501:BCTRL:
+    default_value: -12.283253713064276
+    is_constant: false
+    value_range:
+    - -15.468243841970521
+    - -8.381596111927507
+    value_range_tolerance: 1.0e-08
+    variable_class: ScalarVariable
+  QUAD:LI28:601:BCTRL:
+    default_value: 12.42158134296542
+    is_constant: false
+    value_range:
+    - 8.664576285552261
+    - 15.787748119401057
+    value_range_tolerance: 1.0e-08
+    variable_class: ScalarVariable
+  QUAD:LI28:701:BCTRL:
+    default_value: -12.5427788
+    is_constant: false
+    value_range:
+    - -16.156694522159814
+    - -8.995761931039933
+    value_range_tolerance: 1.0e-08
+    variable_class: ScalarVariable
+  QUAD:LI29:201:BCTRL:
+    default_value: 12.73341646430374
+    is_constant: false
+    value_range:
+    - 9.70182565501078
+    - 16.4675021937807
+    value_range_tolerance: 1.0e-08
+    variable_class: ScalarVariable
+  QUAD:LI29:301:BCTRL:
+    default_value: -13.4511868
+    is_constant: false
+    value_range:
+    - -17.463084484905448
+    - -10.091555783608685
+    value_range_tolerance: 1.0e-08
+    variable_class: ScalarVariable
+  QUAD:LI29:401:BCTRL:
+    default_value: 13.100186076586992
+    is_constant: false
+    value_range:
+    - 9.825659432429468
+    - 17.00296014487099
+    value_range_tolerance: 1.0e-08
+    variable_class: ScalarVariable
+  QUAD:LI29:501:BCTRL:
+    default_value: -13.25463163769531
+    is_constant: false
+    value_range:
+    - -17.254822132482776
+    - -9.821944453396554
+    value_range_tolerance: 1.0e-08
+    variable_class: ScalarVariable
+  QUAD:LI29:601:BCTRL:
+    default_value: 13.429926913930943
+    is_constant: false
+    value_range:
+    - 10.112744615450138
+    - 17.531071589330327
+    value_range_tolerance: 1.0e-08
+    variable_class: ScalarVariable
+  QUAD:LI29:701:BCTRL:
+    default_value: -13.537959276801288
+    is_constant: false
+    value_range:
+    - -17.85037371285222
+    - -10.455831653884527
+    value_range_tolerance: 1.0e-08
+    variable_class: ScalarVariable
+  QUAD:LI29:801:BCTRL:
+    default_value: 14.0308552
+    is_constant: false
+    value_range:
+    - 10.772637152828835
+    - 18.6216786
+    value_range_tolerance: 1.0e-08
+    variable_class: ScalarVariable
+  QUAD:LI29:901:BCTRL:
+    default_value: -13.616110930126837
+    is_constant: false
+    value_range:
+    - -18.10732340040988
+    - -10.508959910215228
+    value_range_tolerance: 1.0e-08
+    variable_class: ScalarVariable
+  QUAD:LI30:201:BCTRL:
+    default_value: 13.6712337
+    is_constant: false
+    value_range:
+    - 10.810085406628694
+    - 18.179064009158413
+    value_range_tolerance: 1.0e-08
+    variable_class: ScalarVariable
+  QUAD:LI30:301:BCTRL:
+    default_value: -14.415567666936674
+    is_constant: false
+    value_range:
+    - -19.178009825559638
+    - -11.415641830283212
+    value_range_tolerance: 1.0e-08
+    variable_class: ScalarVariable
+  QUAD:LI30:401:BCTRL:
+    default_value: 14.130069390132137
+    is_constant: false
+    value_range:
+    - 11.12277522149722
+    - 18.936109539333156
+    value_range_tolerance: 1.0e-08
+    variable_class: ScalarVariable
+  QUAD:LI30:501:BCTRL:
+    default_value: -14.3193123
+    is_constant: false
+    value_range:
+    - -19.207602268231817
+    - -11.170202339433299
+    value_range_tolerance: 1.0e-08
+    variable_class: ScalarVariable
+  QUAD:LI30:601:BCTRL:
+    default_value: 14.54234302766161
+    is_constant: false
+    value_range:
+    - 11.224261991960812
+    - 19.483817026274227
+    value_range_tolerance: 1.0e-08
+    variable_class: ScalarVariable
+  QUAD:LI30:701:BCTRL:
+    default_value: -14.7348367
+    is_constant: false
+    value_range:
+    - -19.807074319472832
+    - -11.29247165905632
+    value_range_tolerance: 1.0e-08
+    variable_class: ScalarVariable
+  QUAD:LI30:801:BCTRL:
+    default_value: 18.04574488904024
+    is_constant: false
+    value_range:
+    - 13.696740574283623
+    - 24.38199374343425
+    value_range_tolerance: 1.0e-08
+    variable_class: ScalarVariable
+  QUAD:LTUH:110:BCTRL:
+    default_value: -55.09629813272308
+    is_constant: false
+    value_range:
+    - -74.70684492572622
+    - -41.50380273651456
+    value_range_tolerance: 1.0e-08
+    variable_class: ScalarVariable
+  QUAD:LTUH:120:BCTRL:
+    default_value: 38.6280126
+    is_constant: false
+    value_range:
+    - 29.09831451720522
+    - 52.57500000000001
+    value_range_tolerance: 1.0e-08
+    variable_class: ScalarVariable
+  QUAD:LTUH:130:BCTRL:
+    default_value: -68.94119894719253
+    is_constant: false
+    value_range:
+    - -93.4795918
+    - -51.933106551557216
+    value_range_tolerance: 1.0e-08
+    variable_class: ScalarVariable
+  QUAD:LTUH:180:BCTRL:
+    default_value: 116.7688522
+    is_constant: false
+    value_range:
+    - 87.9614705557721
+    - 158.3306470003898
+    value_range_tolerance: 1.0e-08
+    variable_class: ScalarVariable
+  QUAD:LTUH:190:BCTRL:
+    default_value: -111.29891100292714
+    is_constant: false
+    value_range:
+    - -150.9137776310877
+    - -83.84098757281043
+    value_range_tolerance: 1.0e-08
+    variable_class: ScalarVariable
+  QUAD:LTUH:250:BCTRL:
+    default_value: 49.55848502937806
+    is_constant: false
+    value_range:
+    - 37.33219211252623
+    - 67.19794580254654
+    value_range_tolerance: 1.0e-08
+    variable_class: ScalarVariable
+  QUAD:LTUH:285:BCTRL:
+    default_value: -68.73015481544604
+    is_constant: false
+    value_range:
+    - -93.1934303
+    - -51.77412792124402
+    value_range_tolerance: 1.0e-08
+    variable_class: ScalarVariable
+  QUAD:LTUH:290:BCTRL:
+    default_value: 137.0911568
+    is_constant: false
+    value_range:
+    - 103.27017459407405
+    - 185.8863143
+    value_range_tolerance: 1.0e-08
+    variable_class: ScalarVariable
+  QUAD:LTUH:460:BCTRL:
+    default_value: -1.6633246
+    is_constant: false
+    value_range:
+    - -5.0
+    - 5.0
+    value_range_tolerance: 1.0e-08
+    variable_class: ScalarVariable
+  QUAD:LTUH:620:BCTRL:
+    default_value: -47.85637230862321
+    is_constant: false
+    value_range:
+    - -75.4
+    - -8.397846596044333
+    value_range_tolerance: 1.0e-08
+    variable_class: ScalarVariable
+  QUAD:LTUH:640:BCTRL:
+    default_value: 49.22322509999001
+    is_constant: false
+    value_range:
+    - 20.8
+    - 76.38317995
+    value_range_tolerance: 1.0e-08
+    variable_class: ScalarVariable
+  QUAD:LTUH:660:BCTRL:
+    default_value: -68.12583
+    is_constant: false
+    value_range:
+    - -98.33849719196007
+    - -46.724936100000036
+    value_range_tolerance: 1.0e-08
+    variable_class: ScalarVariable
+  QUAD:LTUH:680:BCTRL:
+    default_value: 47.665802040222815
+    is_constant: false
+    value_range:
+    - 21.399999999999995
+    - 79.87823191766181
+    value_range_tolerance: 1.0e-08
+    variable_class: ScalarVariable
+  QUAD:LTUH:720:BCTRL:
+    default_value: 15.408720130121171
+    is_constant: false
+    value_range:
+    - 11.60732213191363
+    - 20.89317983745244
+    value_range_tolerance: 1.0e-08
+    variable_class: ScalarVariable
+  QUAD:LTUH:820:BCTRL:
+    default_value: 29.85986361080582
+    is_constant: false
+    value_range:
+    - 22.254759
+    - 35.9627201
+    value_range_tolerance: 1.0e-08
+    variable_class: ScalarVariable
+  QUAD:LTUH:860:BCTRL:
+    default_value: 18.9404041
+    is_constant: false
+    value_range:
+    - 10.986792
+    - 24.3995019367165
+    value_range_tolerance: 1.0e-08
+    variable_class: ScalarVariable
+  QUAD:LTUH:880:BCTRL:
+    default_value: -19.916414
+    is_constant: false
+    value_range:
+    - -23.7033815
+    - -16.2033815
+    value_range_tolerance: 1.0e-08
+    variable_class: ScalarVariable
+  SOLN:IN20:121:BCTRL:
+    default_value: 0.4813178
+    is_constant: false
+    value_range:
+    - 0.0
+    - 0.5055291795264196
+    value_range_tolerance: 1.0e-08
+    variable_class: ScalarVariable
+  XCOR:UNDH:1480:BCTRL:
+    default_value: -6.1215076e-06
+    is_constant: false
+    value_range:
+    - -0.0028248651377159096
+    - 0.005033529263642029
+    value_range_tolerance: 1.0e-08
+    variable_class: ScalarVariable
+  XCOR:UNDH:1680:BCTRL:
+    default_value: -4.8465646e-06
+    is_constant: false
+    value_range:
+    - -0.0013436446
+    - 0.003359911225692251
+    value_range_tolerance: 1.0e-08
+    variable_class: ScalarVariable
+  XCOR:UNDH:1780:BCTRL:
+    default_value: 0.0
+    is_constant: false
+    value_range:
+    - -0.0004089503035719524
+    - 0.0009414445020145853
+    value_range_tolerance: 1.0e-08
+    variable_class: ScalarVariable
+  XCOR:UNDH:2080:BCTRL:
+    default_value: -4.058912810943192e-05
+    is_constant: false
+    value_range:
+    - -0.0030386553795995314
+    - 0.0010563363870739538
+    value_range_tolerance: 1.0e-08
+    variable_class: ScalarVariable
+  XCOR:UNDH:2180:BCTRL:
+    default_value: -6.2331846e-05
+    is_constant: false
+    value_range:
+    - -0.00519363942948404
+    - 0.0012457750181891702
+    value_range_tolerance: 1.0e-08
+    variable_class: ScalarVariable
+  XCOR:UNDH:2380:BCTRL:
+    default_value: 0.0
+    is_constant: false
+    value_range:
+    - -0.00073802833
+    - 0.0017726762177043365
+    value_range_tolerance: 1.0e-08
+    variable_class: ScalarVariable
+  XCOR:UNDH:2580:BCTRL:
+    default_value: -8.3144594e-06
+    is_constant: false
+    value_range:
+    - -0.001271308936881882
+    - 0.001694503498157645
+    value_range_tolerance: 1.0e-08
+    variable_class: ScalarVariable
+  XCOR:UNDH:2680:BCTRL:
+    default_value: 2.7433981e-05
+    is_constant: false
+    value_range:
+    - -0.006818511725362722
+    - 0.0010443032656933184
+    value_range_tolerance: 1.0e-08
+    variable_class: ScalarVariable
+  XCOR:UNDH:2880:BCTRL:
+    default_value: -1.598553651816078e-05
+    is_constant: false
+    value_range:
+    - -0.0012868107437205658
+    - 0.0061962
+    value_range_tolerance: 1.0e-08
+    variable_class: ScalarVariable
+  XCOR:UNDH:3380:BCTRL:
+    default_value: 1.2613474823505382e-05
+    is_constant: false
+    value_range:
+    - -0.0014957628300821927
+    - 0.000513005853731124
+    value_range_tolerance: 1.0e-08
+    variable_class: ScalarVariable
+  XCOR:UNDH:3680:BCTRL:
+    default_value: 0.0
+    is_constant: false
+    value_range:
+    - -0.0064336
+    - 0.00043507814
+    value_range_tolerance: 1.0e-08
+    variable_class: ScalarVariable
+  XCOR:UNDH:3780:BCTRL:
+    default_value: 3.6862648e-05
+    is_constant: false
+    value_range:
+    - -0.006171199999999999
+    - 0.0011189332551143783
+    value_range_tolerance: 1.0e-08
+    variable_class: ScalarVariable
+  XCOR:UNDH:3980:BCTRL:
+    default_value: -6.561102602757536e-05
+    is_constant: false
+    value_range:
+    - -0.006732485
+    - 0.0006210130987068447
+    value_range_tolerance: 1.0e-08
+    variable_class: ScalarVariable
+  XCOR:UNDH:4480:BCTRL:
+    default_value: 4.9665498e-05
+    is_constant: false
+    value_range:
+    - -0.0062531
+    - 0.005907804951599106
+    value_range_tolerance: 1.0e-08
+    variable_class: ScalarVariable
+  YCOR:UNDH:1480:BCTRL:
+    default_value: 0.00022689983
+    is_constant: false
+    value_range:
+    - -0.006058535
+    - 0.002548799931927693
+    value_range_tolerance: 1.0e-08
+    variable_class: ScalarVariable
+  YCOR:UNDH:1680:BCTRL:
+    default_value: 1.2613525e-05
+    is_constant: false
+    value_range:
+    - -0.001359329031641128
+    - 0.0016724752
+    value_range_tolerance: 1.0e-08
+    variable_class: ScalarVariable
+  YCOR:UNDH:2180:BCTRL:
+    default_value: 0.0
+    is_constant: false
+    value_range:
+    - -0.0029562337477642047
+    - 0.0030887245225365424
+    value_range_tolerance: 1.0e-08
+    variable_class: ScalarVariable
+  YCOR:UNDH:2480:BCTRL:
+    default_value: -4.5381941e-05
+    is_constant: false
+    value_range:
+    - -0.0018191736660348656
+    - 0.0006468842897085995
+    value_range_tolerance: 1.0e-08
+    variable_class: ScalarVariable
+  YCOR:UNDH:2780:BCTRL:
+    default_value: 2.1729028338350463e-05
+    is_constant: false
+    value_range:
+    - -0.0011104298710889794
+    - 0.005263
+    value_range_tolerance: 1.0e-08
+    variable_class: ScalarVariable
+  YCOR:UNDH:3180:BCTRL:
+    default_value: 1.7810956e-05
+    is_constant: false
+    value_range:
+    - -0.0004773612684892056
+    - 0.00039847000218796053
+    value_range_tolerance: 1.0e-08
+    variable_class: ScalarVariable
+  YCOR:UNDH:3280:BCTRL:
+    default_value: 4.6786628e-05
+    is_constant: false
+    value_range:
+    - -0.0011233178275310237
+    - 0.0037500566689361256
+    value_range_tolerance: 1.0e-08
+    variable_class: ScalarVariable
+  YCOR:UNDH:3380:BCTRL:
+    default_value: -3.838221e-05
+    is_constant: false
+    value_range:
+    - -0.0006176546279573782
+    - 0.0016455158
+    value_range_tolerance: 1.0e-08
+    variable_class: ScalarVariable
+  YCOR:UNDH:3480:BCTRL:
+    default_value: -4.2503253e-05
+    is_constant: false
+    value_range:
+    - -0.0010750302018264484
+    - 0.0033909833966651935
+    value_range_tolerance: 1.0e-08
+    variable_class: ScalarVariable
+  YCOR:UNDH:3580:BCTRL:
+    default_value: -6.734071571727784e-06
+    is_constant: false
+    value_range:
+    - -0.0008498890583785101
+    - 0.0007738155672401744
+    value_range_tolerance: 1.0e-08
+    variable_class: ScalarVariable
+  YCOR:UNDH:3680:BCTRL:
+    default_value: 0.00012777076
+    is_constant: false
+    value_range:
+    - -0.0009565298149287514
+    - 0.0009578305638844344
+    value_range_tolerance: 1.0e-08
+    variable_class: ScalarVariable
+  YCOR:UNDH:4080:BCTRL:
+    default_value: 2.7135126e-05
+    is_constant: false
+    value_range:
+    - -0.0012436271683212315
+    - 0.0009
+    value_range_tolerance: 1.0e-08
+    variable_class: ScalarVariable
+  YCOR:UNDH:4380:BCTRL:
+    default_value: 6.8228312e-05
+    is_constant: false
+    value_range:
+    - -0.000329581451991062
+    - 0.0032439274835108682
+    value_range_tolerance: 1.0e-08
+    variable_class: ScalarVariable
+  YCOR:UNDH:4480:BCTRL:
+    default_value: 4.285927003042144e-05
+    is_constant: false
+    value_range:
+    - -0.005171282402765858
+    - 0.0019649462038191464
+    value_range_tolerance: 1.0e-08
+    variable_class: ScalarVariable
+model: resources/final_lcls_fel_model_cpu.pt
+model_class: TorchModule
+output_format: tensor
+output_transformers:
+- resources/lcls_fel_output_scaler.pt
+output_variables:
+  hxr_pulse_intensity:
+    is_constant: false
+    value_range_tolerance: 1.0e-08
+    variable_class: ScalarVariable
+precision: double
