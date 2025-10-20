@@ -10,13 +10,19 @@ lume-model
 ## Usage
 From the main repoistory directory, call
 ```python
-from lume-model.models import TorchModel
+from lume_model.models import TorchModel
 
 # load model from yaml
 model = TorchModel("model_config.yaml")
 
 # evaluate the model at a given point
-model.evaluate({"ACCL:LI25:1:ADES": 6260.0})
+print(model.evaluate({"ACCL:LI25:1:ADES": 6260.0}))
+
+# get model input variables
+print(model.input_variables)
+
+# get model output variables
+print(model.output_variables)
 ```
  NOTE: when not specified, input variables are set to their default values
  as defined in `model_config.yaml`
