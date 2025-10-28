@@ -1,28 +1,13 @@
-# LCLS_FEL_Surrogate
-Self-contained ML-based surrogate model of the LCLS FEL pulse intensity packaged using [LUME-model](https://slaclab.github.io/lume-model/).
+# LCLS_FEL_Surrogate_RL
+RL Wrapper around the FEL Surrogate Model
 
-## Dependencies
+## Install
+Create Venv, Activate Venv, Install from requirements.txt
+```bash
+python3 -m venv .venv
+source .venv/bin/activate
+pip install -r requirements.txt
 ```
-torch
-lume-model
-```
 
-## Usage
-From the main repoistory directory, call
-```python
-from lume_model.models import TorchModel
-
-# load model from yaml
-model = TorchModel("model_config.yaml")
-
-# evaluate the model at a given point
-print(model.evaluate({"ACCL:LI25:1:ADES": 6260.0}))
-
-# get model input variables
-print(model.input_variables)
-
-# get model output variables
-print(model.output_variables)
-```
- NOTE: when not specified, input variables are set to their default values
- as defined in `model_config.yaml`
+## Train RL Model
+python rl.py
