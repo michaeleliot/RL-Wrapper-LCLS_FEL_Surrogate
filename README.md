@@ -10,4 +10,6 @@ pip install -r requirements.txt
 ```
 
 ## Train RL Model
+```bash
 python rl.py
+```
