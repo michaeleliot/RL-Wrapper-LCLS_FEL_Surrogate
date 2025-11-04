@@ -37,9 +37,6 @@ class LTUHEnv(gym.Env):
 
         self._mids = np.array([(ranges[q][1] + ranges[q][0]) / 2 for q in quad_names], dtype=np.float64)
         self._half_ranges = np.array([(ranges[q][1] - ranges[q][0]) / 2 for q in quad_names], dtype=np.float64)
-        
-        self._lows = np.array([ranges[q][0] for q in quad_names], dtype=np.float64)
-        self._highs = np.array([ranges[q][1] for q in quad_names], dtype=np.float64)
 
         self.action_space = spaces.Box(low=-1.0, high=1.0, shape=(self.n,), dtype=np.float64)
         self.observation_space = spaces.Box(
@@ -51,6 +48,28 @@ class LTUHEnv(gym.Env):
         self.rng = np.random.default_rng(seed)
         self.reset()
 
+        # --- ADD THIS SANITY CHECK ---
+        print("\n--- Environment Sanity Check ---")
+        print(f"{'Quad Name':<18} | {'Min Range':<18} | {'Max Range':<18} | {'Midpoint':<18} | {'Half Range':<18}")
+        print("-" * 90)
+
+        # We fetch the min/max arrays just as _evaluate_beam will
+        min_vals = np.array([self.ranges[q][0] for q in self.quad_names])
+        max_vals = np.array([self.ranges[q][1] for q in self.quad_names])
+
+        for i, name in enumerate(self.quad_names):
+            # Check if denormalizing -1 and +1 equals the min/max
+            calc_min = (self._half_ranges[i] * -1) + self._mids[i]
+            calc_max = (self._half_ranges[i] * 1) + self._mids[i]
+
+            print(f"{name:<18} | {min_vals[i]:<18.8f} | {max_vals[i]:<18.8f} | {self._mids[i]:<18.8f} | {self._half_ranges[i]:<18.8f}")
+
+            # This check will show the floating point error!
+            if not np.isclose(calc_min, min_vals[i]):
+                print(f"  !-> Note: Calculated min ({calc_min:.15f}) doesn't exactly match range min ({min_vals[i]:.15f}) due to float precision.")
+
+        print("--- End Sanity Check ---\n")
+
     def _normalize(self, vals: np.ndarray) -> np.ndarray:
         return (vals - self._mids) / self._half_ranges
 
@@ -59,6 +78,13 @@ class LTUHEnv(gym.Env):
 
     def _evaluate_beam(self, norm_quads: np.ndarray) -> float:
         physical = self._denormalize(norm_quads)
+
+        min_vals = np.array([self.ranges[q][0] for q in self.quad_names])
+        max_vals = np.array([self.ranges[q][1] for q in self.quad_names])
+
+        physical_clipped = np.clip(physical, min_vals, max_vals)
+
+
         mapping = {name: float(val) for name, val in zip(self.quad_names, physical)}
         out = self.model.evaluate(mapping)
         val = out.get("hxr_pulse_intensity")
@@ -88,23 +114,37 @@ class LTUHEnv(gym.Env):
         return obs, {}
 
     def step(self, action: np.ndarray):
-        self.step_count += 1
+      self.step_count += 1
 
-        delta = np.clip(action, -1, 1) * self.step_scale
-        new_state = np.clip(self.state + delta, -1, 1)
-        beam = self._evaluate_beam(new_state)
+      new_state = np.clip(action, -1, 1)
 
-        new_obj = self._objective(beam)
-        reward = self._reward(self._last_objective, new_obj)
+      # --- The rest of the function is identical ---
+      beam = self._evaluate_beam(new_state)
 
-        self.state = new_state
-        self._last_objective = new_obj
+      new_obj = self._objective(beam)
+      reward = self._reward(self._last_objective, new_obj)
 
-        obs = np.concatenate([self.state, [beam]]).astype(np.float64)
-        terminated = False
-        truncated = self.step_count >= self.max_steps
-        info = {"beam_intensity": beam, "objective": new_obj}
-        return obs, reward, terminated, truncated, info
+      self.state = new_state
+      self._last_objective = new_obj
+
+      obs = np.concatenate([self.state, [beam]]).astype(np.float64)
+      terminated = False
+      truncated = self.step_count >= self.max_steps
+      info = {"beam_intensity": beam, "objective": new_obj}
+      return obs, reward, terminated, truncated, info
 
     def render(self):
-        print(f"Step {self.step_count}: beam = {self._evaluate_beam(self.state):.4f}")
+      # Get the current physical values
+      physical_vals = self._denormalize(self.state)
+
+      print(f"\n--- Step {self.step_count} ---")
+
+      # Evaluate the beam (you might already have this from the step,
+      # but evaluating again is safer unless you store it)
+      current_beam = self._evaluate_beam(self.state)
+      print(f"  Beam Intensity: {current_beam:.4f} (Target: {self.target_power})")
+      print(f"  Objective:      {self._last_objective:.4f}")
+
+      print("\n  Quadrupole Physical Values:")
+      for i, name in enumerate(self.quad_names):
+          print(f"    {name}: {physical_vals[i]:.4f}  (Normalized: {self.state[i]:.4f})")
