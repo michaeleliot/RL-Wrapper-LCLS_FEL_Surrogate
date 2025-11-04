@@ -23,6 +23,8 @@ class LTUHEnv(gym.Env):
         step_scale: float = 0.05,
         max_steps: int = 100,
         seed: Optional[int] = None,
+        normal_noise_std: float = 0.05,  
+        uniform_sample_prob: float = 0.05,
     ):
         super().__init__()
         self.quad_names = quad_names
@@ -33,10 +35,13 @@ class LTUHEnv(gym.Env):
         self.step_scale = step_scale
         self.max_steps = max_steps
         self.n = len(quad_names)
-        self.debug_logging = True
+
+        self.normal_noise_std = normal_noise_std
+        self.uniform_sample_prob = uniform_sample_prob
 
         self._mids = np.array([(ranges[q][1] + ranges[q][0]) / 2 for q in quad_names], dtype=np.float64)
         self._half_ranges = np.array([(ranges[q][1] - ranges[q][0]) / 2 for q in quad_names], dtype=np.float64)
+        self._default_normalized = self._normalize(np.array([defaults[q] for q in quad_names]))
 
         self.action_space = spaces.Box(low=-1.0, high=1.0, shape=(self.n,), dtype=np.float64)
         self.observation_space = spaces.Box(
@@ -56,17 +61,8 @@ class LTUHEnv(gym.Env):
         max_vals = np.array([self.ranges[q][1] for q in self.quad_names])
 
         for i, name in enumerate(self.quad_names):
-            calc_min = (self._half_ranges[i] * -1) + self._mids[i]
-            calc_max = (self._half_ranges[i] * 1) + self._mids[i]
-
             print(f"{name:<18} | {min_vals[i]:<18.8f} | {max_vals[i]:<18.8f} | {self._mids[i]:<18.8f} | {self._half_ranges[i]:<18.8f}")
-
-            if not np.isclose(calc_min, min_vals[i]):
-                print(f"  !-> Note: Calculated min ({calc_min:.15f}) doesn't exactly match range min ({min_vals[i]:.15f}) due to float precision.")
-
-            if not np.isclose(calc_max, max_vals[i]):
-                print(f"  !-> Note: Calculated max ({calc_max:.15f}) doesn't exactly match range max ({max_vals[i]:.15f}) due to float precision.")
-
+        
         print("--- End Evnironment Check ---\n")
 
     def _normalize(self, vals: np.ndarray) -> np.ndarray:
@@ -94,16 +90,24 @@ class LTUHEnv(gym.Env):
         return - (beam_intensity - self.target_power) ** 2
 
     def _reward(self, prev_obj: float, new_obj: float) -> float:
-        r_hat = prev_obj - new_obj
-        return r_hat if r_hat > 0 else 2 * r_hat
+        r_hat = new_obj - prev_obj
+        return r_hat if r_hat > 0 else 2 * r_hat 
 
-    def reset(self, *, seed=None):
+    def reset(self, *, seed=None, options=None):
         if seed is not None:
             self.rng = np.random.default_rng(seed)
         self.step_count = 0
 
-        default_physical = np.array([self.defaults[q] for q in self.quad_names])
-        self.state = self._normalize(default_physical) # TODO: Add some noise to this, or make it probabalistic in some way
+        if self.rng.random() < self.uniform_sample_prob:
+            new_state = self.rng.uniform(low=-1.0, high=1.0, size=self.n)
+        else:
+            noise = self.rng.normal(loc=0.0, scale=self.normal_noise_std, size=self.n)
+            new_state = self._default_normalized + noise
+            
+            new_state = np.clip(new_state, -1.0, 1.0)
+            
+        self.state = new_state.astype(np.float64)
+        
 
         beam = self._evaluate_beam(self.state)
         self._last_objective = self._objective(beam)
@@ -114,7 +118,7 @@ class LTUHEnv(gym.Env):
     def step(self, action: np.ndarray):
       self.step_count += 1
 
-      new_state = np.clip(action, -1, 1)
+      new_state = np.clip(action, -1, 1) 
 
       beam = self._evaluate_beam(new_state)
 

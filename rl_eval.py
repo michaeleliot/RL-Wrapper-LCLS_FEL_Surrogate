@@ -1,3 +1,5 @@
+import sys
+import os
 import numpy as np
 import pandas as pd
 from tqdm import trange
@@ -5,6 +7,42 @@ from stable_baselines3 import PPO
 from rl_env import LTUHEnv
 from const import QUAD_NAMES, buffered_env_ranges, DEFAULTS
 from lume_model.models import TorchModel
+
+MODEL_SAVE_FOLDER = "final_rl_models"
+
+def get_model_load_name():
+    """
+    Prompts the user to select an existing model name to load.
+    """
+    existing_models = [
+        f.replace(".zip", "")
+        for f in os.listdir(MODEL_SAVE_FOLDER)
+        if f.endswith(".zip")
+    ]
+    
+    if not existing_models:
+        print(f"❌ No models found in '{MODEL_SAVE_FOLDER}'. Exiting.")
+        sys.exit(1)
+
+    print("\n--- Model Loading Options ---")
+    print("Existing models found (select one to load):")
+    for i, name in enumerate(existing_models):
+        print(f"  [{i+1}] {name}")
+    
+    while True:
+        choice = input("\nEnter selection number (e.g., '1'): ").strip()
+        if choice.isdigit():
+            try:
+                index = int(choice) - 1
+                if 0 <= index < len(existing_models):
+                    selected_name = existing_models[index]
+                    print(f"✅ Selected model: **{selected_name}**")
+                    return selected_name
+                else:
+                    print("❌ Invalid selection number. Try again.")
+            except ValueError:
+                pass 
+        print("❌ Invalid input. Please enter a number corresponding to the list.")
 
 model = TorchModel("model_config.yaml")
 model.input_validation_config = {}
@@ -17,10 +55,13 @@ for name in model.output_names:
 
 
 def evaluate_ltuh_model(env, model, n_episodes=30, target=2.25, tol=0.1, render=False):
+    """
+    Runs the trained PPO model for n_episodes and collects performance metrics.
+    """
     results = []
 
     for ep in trange(n_episodes, desc="Evaluating PPO"):
-        obs, info = env.reset()
+        obs, info = env.reset() 
         done = False
         total_reward = 0.0
         beam_trace = []
@@ -30,7 +71,7 @@ def evaluate_ltuh_model(env, model, n_episodes=30, target=2.25, tol=0.1, render=
         step = 0
 
         while not done:
-            action, _ = model.predict(obs, deterministic=True)
+            action, _ = model.predict(obs, deterministic=True) 
             obs, reward, terminated, truncated, info = env.step(action)
             done = terminated or truncated
 
@@ -62,8 +103,20 @@ def evaluate_ltuh_model(env, model, n_episodes=30, target=2.25, tol=0.1, render=
     df = pd.DataFrame(results)
     return df
 
+model_to_load = get_model_load_name()
+load_path = os.path.join(MODEL_SAVE_FOLDER, f"{model_to_load}.zip")
+
 env = LTUHEnv(QUAD_NAMES, buffered_env_ranges, DEFAULTS, model)
-ppo_model = PPO.load("ppo_ltuh_quad_optimizer", env=env)
+
+print(f"Loading model from: {load_path}")
+try:
+    ppo_model = PPO.load(load_path, env=env)
+except FileNotFoundError:
+    print(f"❌ Error: Model file not found at {load_path}")
+    sys.exit(1)
+
 df = evaluate_ltuh_model(env, ppo_model, n_episodes=50)
+
+print("\n--- Evaluation Summary ---")
 print(df.describe())
-print("Success rate:", df['success'].mean())
+print("\nSuccess rate (within tolerance):", df['success'].mean())
