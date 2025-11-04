@@ -9,7 +9,12 @@ source .venv/bin/activate
 pip install -r requirements.txt
 ```
 
-## Train RL Model
+## Train the RL Model
 ```bash
-python rl.py
+python rl_train.py
+```
+
+## Evaluate the RL Model
+```bash
+python rl_eval.py
 ```
