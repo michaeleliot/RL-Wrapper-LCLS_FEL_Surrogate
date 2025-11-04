@@ -1,6 +1,5 @@
 import numpy as np
 import pandas as pd
-import matplotlib.pyplot as plt
 from tqdm import trange
 from stable_baselines3 import PPO
 from rl_env import LTUHEnv

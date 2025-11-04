@@ -11,10 +11,6 @@ model = TorchModel("model_config.yaml")
 # Load your environment (replace with your actual environment)
 eval_env = LTUHEnv(QUAD_NAMES, buffered_env_ranges, DEFAULTS, model)
 
-eval_callback = EvalCallback(eval_env, best_model_save_path="./logs/",
-                             log_path="./logs/", eval_freq=5000,
-                             deterministic=True, render=False)
-
 # Load the trained PPO model
 ppo_model = PPO.load("ppo_ltuh_quad_optimizer", env=eval_env)
 

@@ -49,7 +49,7 @@ class LTUHEnv(gym.Env):
         self.reset()
 
         # --- ADD THIS SANITY CHECK ---
-        print("\n--- Environment Sanity Check ---")
+        print("\n--- Environment Check ---")
         print(f"{'Quad Name':<18} | {'Min Range':<18} | {'Max Range':<18} | {'Midpoint':<18} | {'Half Range':<18}")
         print("-" * 90)
 
@@ -68,7 +68,7 @@ class LTUHEnv(gym.Env):
             if not np.isclose(calc_min, min_vals[i]):
                 print(f"  !-> Note: Calculated min ({calc_min:.15f}) doesn't exactly match range min ({min_vals[i]:.15f}) due to float precision.")
 
-        print("--- End Sanity Check ---\n")
+        print("--- End Evnironment Check ---\n")
 
     def _normalize(self, vals: np.ndarray) -> np.ndarray:
         return (vals - self._mids) / self._half_ranges
@@ -84,8 +84,7 @@ class LTUHEnv(gym.Env):
 
         physical_clipped = np.clip(physical, min_vals, max_vals)
 
-
-        mapping = {name: float(val) for name, val in zip(self.quad_names, physical)}
+        mapping = {name: float(val) for name, val in zip(self.quad_names, physical_clipped)}
         out = self.model.evaluate(mapping)
         val = out.get("hxr_pulse_intensity")
         if hasattr(val, "detach"):
@@ -99,13 +98,13 @@ class LTUHEnv(gym.Env):
         r_hat = prev_obj - new_obj
         return r_hat if r_hat > 0 else 2 * r_hat
 
-    def reset(self, *, seed=None, options=None):
+    def reset(self, *, seed=None):
         if seed is not None:
             self.rng = np.random.default_rng(seed)
         self.step_count = 0
 
         default_physical = np.array([self.defaults[q] for q in self.quad_names])
-        self.state = self._normalize(default_physical)
+        self.state = self._normalize(default_physical) # TODO: Add some noise to this, or make it probabalistic in some way
 
         beam = self._evaluate_beam(self.state)
         self._last_objective = self._objective(beam)
@@ -118,7 +117,6 @@ class LTUHEnv(gym.Env):
 
       new_state = np.clip(action, -1, 1)
 
-      # --- The rest of the function is identical ---
       beam = self._evaluate_beam(new_state)
 
       new_obj = self._objective(beam)
@@ -134,13 +132,10 @@ class LTUHEnv(gym.Env):
       return obs, reward, terminated, truncated, info
 
     def render(self):
-      # Get the current physical values
       physical_vals = self._denormalize(self.state)
 
       print(f"\n--- Step {self.step_count} ---")
 
-      # Evaluate the beam (you might already have this from the step,
-      # but evaluating again is safer unless you store it)
       current_beam = self._evaluate_beam(self.state)
       print(f"  Beam Intensity: {current_beam:.4f} (Target: {self.target_power})")
       print(f"  Objective:      {self._last_objective:.4f}")
