@@ -1,6 +1,4 @@
 from const import QUAD_NAMES, buffered_env_ranges, DEFAULTS
-import gymnasium as gym
-import numpy as np
 from stable_baselines3 import PPO
 from stable_baselines3.common.callbacks import EvalCallback
 from rl_env import LTUHEnv
