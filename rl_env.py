@@ -48,25 +48,24 @@ class LTUHEnv(gym.Env):
         self.rng = np.random.default_rng(seed)
         self.reset()
 
-        # --- ADD THIS SANITY CHECK ---
         print("\n--- Environment Check ---")
         print(f"{'Quad Name':<18} | {'Min Range':<18} | {'Max Range':<18} | {'Midpoint':<18} | {'Half Range':<18}")
         print("-" * 90)
 
-        # We fetch the min/max arrays just as _evaluate_beam will
         min_vals = np.array([self.ranges[q][0] for q in self.quad_names])
         max_vals = np.array([self.ranges[q][1] for q in self.quad_names])
 
         for i, name in enumerate(self.quad_names):
-            # Check if denormalizing -1 and +1 equals the min/max
             calc_min = (self._half_ranges[i] * -1) + self._mids[i]
             calc_max = (self._half_ranges[i] * 1) + self._mids[i]
 
             print(f"{name:<18} | {min_vals[i]:<18.8f} | {max_vals[i]:<18.8f} | {self._mids[i]:<18.8f} | {self._half_ranges[i]:<18.8f}")
 
-            # This check will show the floating point error!
             if not np.isclose(calc_min, min_vals[i]):
                 print(f"  !-> Note: Calculated min ({calc_min:.15f}) doesn't exactly match range min ({min_vals[i]:.15f}) due to float precision.")
+
+            if not np.isclose(calc_max, max_vals[i]):
+                print(f"  !-> Note: Calculated max ({calc_max:.15f}) doesn't exactly match range max ({max_vals[i]:.15f}) due to float precision.")
 
         print("--- End Evnironment Check ---\n")
 
