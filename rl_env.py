@@ -19,7 +19,8 @@ class LTUHEnv(gym.Env):
         ranges: Dict[str, List[float]],
         defaults: Dict[str, float],
         model,
-        target_power: float = 2.25,
+        min_target_power: float = 2.0,  # NEW: Bottom of the target range
+        max_target_power: float = 2.5,  # NEW: Top of the target range
         step_scale: float = 0.05,
         max_steps: int = 100,
         seed: Optional[int] = None,
@@ -31,7 +32,11 @@ class LTUHEnv(gym.Env):
         self.ranges = ranges
         self.defaults = defaults
         self.model = model
-        self.target_power = target_power
+        
+        # Store the new custom bounds
+        self.min_target_power = min_target_power
+        self.max_target_power = max_target_power
+        
         self.step_scale = step_scale
         self.max_steps = max_steps
         self.n = len(quad_names)
@@ -87,7 +92,15 @@ class LTUHEnv(gym.Env):
         return float(val)
 
     def _objective(self, beam_intensity: float) -> float:
-        return - (beam_intensity - self.target_power) ** 2
+        min_target = self.min_target_power
+        max_target = self.max_target_power
+        
+        if min_target <= beam_intensity <= max_target:
+            return 0.0
+        elif beam_intensity < min_target:
+            return - (min_target - beam_intensity) ** 2
+        else:
+            return - (beam_intensity - max_target) ** 2
 
     def _reward(self, prev_obj: float, new_obj: float) -> float:
         r_hat = new_obj - prev_obj
