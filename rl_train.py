@@ -2,6 +2,8 @@ import sys
 import os
 from datetime import datetime
 from stable_baselines3 import PPO
+from stable_baselines3.common.monitor import Monitor
+from stable_baselines3.common.vec_env import DummyVecEnv
 from stable_baselines3.common.callbacks import EvalCallback
 from lume_model.models import TorchModel
 
@@ -10,9 +12,11 @@ from rl_env import LTUHEnv
 
 MODEL_SAVE_FOLDER = "final_rl_models"
 LOGS_FOLDER = "rl_training_logs"
+TB_FOLDER = 'tb_logs'
 
 os.makedirs(MODEL_SAVE_FOLDER, exist_ok=True)
 os.makedirs(LOGS_FOLDER, exist_ok=True)
+os.makedirs(TB_FOLDER, exist_ok=True)
 
 
 def get_model_save_name():
@@ -80,13 +84,18 @@ model.output_validation_config = {}
 for name in model.output_names:
     model.output_validation_config[name] = "warn"
 
-env = LTUHEnv(QUAD_NAMES, buffered_env_ranges, DEFAULTS, model)
+#env = LTUHEnv(QUAD_NAMES, buffered_env_ranges, DEFAULTS, model)
+train_env = LTUHEnv(QUAD_NAMES, buffered_env_ranges, DEFAULTS, model)
+train_env = Monitor(train_env, filename=os.path.join(log_dir, "monitor.csv"))
+eval_env = LTUHEnv(QUAD_NAMES, buffered_env_ranges, DEFAULTS, model)
+eval_env = Monitor(eval_env, filename=os.path.join(log_dir, "eval_monitor.csv"))
 
 eval_callback = EvalCallback(
-    env,
+    eval_env,
     best_model_save_path=log_dir,
     log_path=log_dir,
     eval_freq=5000,
+    n_eval_episodes=10,
     deterministic=True,
     render=False
 )
@@ -96,8 +105,9 @@ print("-" * 40)
 
 ppo_model = PPO(
     "MlpPolicy",
-    env,
+    train_env,
     verbose=1,
+    tensorboard_log=TB_FOLDER,
     learning_rate=3e-4,
     n_steps=2048,
     batch_size=64,
@@ -112,3 +122,6 @@ ppo_model.save(final_model_save_path)
 
 print("-" * 40)
 print(f"✅ Training complete. Final model saved (overwritten/created) at: **{final_model_save_path}**")
+
+print(f"Logs, best checkpoint, and evaluations saved to: {log_dir}")
+print(f"TensorBoard logs: {TB_FOLDER}. run tensorboard --logdir {TB_FOLDER}")
